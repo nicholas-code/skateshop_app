@@ -1,3 +1,4 @@
 name,password,email,type
 Nick,Nick123,nick@gmail.com,staff
 Bob,bob123,bob@gmail.com,user
+greg,greg123,greg@gmail.com,user
