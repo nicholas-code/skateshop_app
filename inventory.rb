@@ -1,9 +1,21 @@
-# asciiart
+require 'asciiart'
 
-# a = AsciiArt.new("girlskate.jpg")
-# b = AsciiArt.new("wheel.jpg")
-#   => #<AsciiArt:0x007fa889cbacf8 @data="...">
-#  puts a.to_ascii_art(width:75, color:true)
+# a = AsciiArt.new("inv_pictures/deck_e.jpg")
+# b = AsciiArt.new("inv_pictures/bearings_1.jpg")
+# c = AsciiArt.new("inv_pictures/bearings.jpg")
+
+# e = AsciiArt.new("inv_pictures/grip1.jpg")
+# f = AsciiArt.new("inv_pictures/hardware.jpg")
+# g = AsciiArt.new("inv_pictures/hardware1.jpg")
+# h = AsciiArt.new("inv_pictures/wheel.jpg")
+# #   => #<AsciiArt:0x007fa889cbacf8 @data="...">
+# puts a.to_ascii_art(width:75, color:true)
+# puts b.to_ascii_art(width:75, color:true)
+# puts c.to_ascii_art(width:75, color:true)
+# puts e.to_ascii_art(width:75, color:true)
+# puts f.to_ascii_art(width:75, color:true)
+# puts g.to_ascii_art(width:75, color:true)
+# puts h.to_ascii_art(width:75, color:true)
 #  puts b.to_ascii_art(width:75, color:true)
 
 
@@ -12,16 +24,28 @@
 def inventory_pull
     # inventory = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
     # puts inventory 
-    CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
+    CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}" }
 end
 
 def staff_inventory
-    prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
-    puts "inventory will be here"
-    back_to_menu
+    prompt
+    inventory_pull
+    back_to_menu_staff
 end
 
-def back_to_menu
+def back_to_menu_staff
+    b = prompt.select("Back to menu?") do |menu|
+        menu.choice "yeah"
+        menu.choice "nah"
+    end
+        if b == "yeah"
+            staff_mainmenu
+        else
+            exit
+        end
+end
+
+def back_to_menu_user
     b = prompt.select("Back to menu?") do |menu|
         menu.choice "yeah"
         menu.choice "nah"
@@ -45,7 +69,8 @@ def amend
     puts "What item would you like to amend"
     puts "Enter item name:"
     print "🛹 "
-    amending(gets.chomp) 
+    item = gets.chomp.capitalize
+    p item
     option = prompt.select("what would you like to amend with this item?") do |menu|
         menu.choice 'Item name'
         menu.choice 'Price'
@@ -55,7 +80,19 @@ def amend
     end
 
     if option == 'Item name'
+        # if item == row['item']
+
+        # else
+        # end
+        CSV.open("inventory.csv", "w") do |csv| 
+            csv << [:item, :price, :quantity, :link]
+        end
         
+        data.each do |row|
+            CSV.open("inventory.csv", "a") do |csv| 
+                csv << row.values
+            end
+        end
 
     elsif option == 'Price'
         
@@ -103,9 +140,15 @@ end
 #user inventory options
 def user_inventory
     inventory_pull
+    back_to_menu_user
 end
 
 def view_images
     inventory_pull
-    puts
+    puts "What item would you like to view?"
+    puts "Enter item name:"
+    print "🛹 "
+    option = gets.chomp
+    xx = amending(option)
+    
 end

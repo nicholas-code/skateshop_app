@@ -45,12 +45,11 @@ def user_mainmenu
     system("clear")
     user_menu = prompt.select("Welcome to the menu") do |menu|
         menu.choice 'Show Inventory'
-        menu.choice 'View pictures of inventory'
+        menu.choice 'View pictures of Inventory'
         # menu.choice 'Add item to cart'
         menu.choice 'Exit'
     end
     if user_menu == 'View pictures of Inventory'
-        #show menu
         view_images
         
     elsif user_menu == 'Show Inventory'
@@ -71,6 +70,7 @@ def staff_mainmenu
         menu.choice 'Show Inventory'
         menu.choice 'Amend Existing Item'
         menu.choice 'Delete Existing Item'
+        menu.choice 'Add New Staff Member'
         menu.choice 'Exit'
     end
     if staff_menu == 'Create New Item'
@@ -84,7 +84,9 @@ def staff_mainmenu
         
     elsif staff_menu == 'Delete Exisitng Item'
         delete 
-        
+       
+    elsif staff_menu == 'Add New Staff Member'    
+        new_staff_member
     else
         puts "Seeya mate"
         exit

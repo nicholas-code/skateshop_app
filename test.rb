@@ -163,10 +163,11 @@ require_relative "./inventory"
 #     #puts @options
 # end
 # item,price,quantity,link
-prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
+# prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
 # system("clear")
-inventory = CSV.read('inventory.csv', headers:true)
-CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
+# inventory = CSV.read('inventory.csv', headers:true)
+product_list = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}" }
+
 # welcome = prompt.select("Welcome to the Skate shop app!") do |menu|
 #     inventory.each do |product|
 #     menu.choice(row['item'])
@@ -178,3 +179,13 @@ CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{ro
 # puts inventory
 # puts start
 # puts user_login
+# def load_product_list
+#     products = {}
+#     # open/read csv database
+#     File.open('product_list.csv').each do |line|
+#         product = line.chomp.split(",")
+#         products.store(product[0], Product.new(product[0], product[1], product[2], product[3]))
+#     end
+#     return products
+# end
+# puts load_product_list

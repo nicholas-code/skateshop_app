@@ -21,6 +21,28 @@ def new_user
     user_mainmenu
 end
 
+def new_staff_member
+    puts "What is the Staff name?"
+    print "🛹 "
+    username = gets.chomp
+    system("clear")
+    puts "Please enter a password"
+    print "🛹 "
+    password = gets.chomp
+    system("clear")
+    puts "Please enter Staff email"
+    print "🛹 "
+    email = gets.chomp
+    system("clear")
+    CSV.open("login.csv", "a") do |csv|
+        csv << [username, password, email, "staff"]
+        puts "#{username} is now in the system"
+        sleep (2)
+        system("clear")
+    end
+    staff_mainmenu
+end
+
 def user_login
     login_start
     verified(gets.chomp)
@@ -84,7 +106,6 @@ def verified_staff(input)
     failed
     end
 end
-
 
 def authentication(username)
     # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
