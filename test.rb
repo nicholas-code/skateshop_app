@@ -1,5 +1,6 @@
 require 'csv'
 require 'tty-prompt'
+require_relative "./inventory"
 
 # class Users
 #     # Giving read access to username and password
@@ -35,71 +36,71 @@ require 'tty-prompt'
 #     end
 # end
 
-def newuser
-    puts "What is your name?"
-    print "> "
-    username = gets.chomp
-    puts "Please enter a password"
-    print "> "
-    password = gets.chomp
-    puts "Please enter your email"
-    print "> "
-    email = gets.chomp
-    CSV.open("login.csv", "a") do |csv|
-        csv << [username, password, email, "user"]
-        puts "You are now in the system"
-    end
-end
+# def newuser
+#     puts "What is your name?"
+#     print "> "
+#     username = gets.chomp
+#     puts "Please enter a password"
+#     print "> "
+#     password = gets.chomp
+#     puts "Please enter your email"
+#     print "> "
+#     email = gets.chomp
+#     CSV.open("login.csv", "a") do |csv|
+#         csv << [username, password, email, "user"]
+#         puts "You are now in the system"
+#     end
+# end
 
-def user_mainmenu
-    puts "user menu"
-end
+# def user_mainmenu
+#     puts "user menu"
+# end
 
-def staff_mainmenu
-    puts "staff menu"
-end
+# def staff_mainmenu
+#     puts "staff menu"
+# end
 
-def user_login
-    login_start
-    verified(gets.chomp)
-end
+# def user_login
+#     login_start
+#     verified(gets.chomp)
+# end
 
-def login_start
-    puts "Enter username:"
-    # print "> "
-end
+# def login_start
+#     puts "Enter username:"
+#     # print "> "
+# end
 
-def verified(input)
-    user_row = authentication(input)
-    if user_row
-        puts 'Please enter your password:'
-        print "> "
-        password = gets.chomp
-        if user_row['password'] == password
-            puts "yeah budda"
-            user_mainmenu
-         else
-            puts "Incorrect password."
-            sleep 1
-            user_login
-        end
-    else
-    failed
-    end
-end
+# def verified(input)
+#     user_row = authentication(input)
+#     if user_row
+#         puts 'Please enter your password:'
+#         print "> "
+#         password = gets.chomp
+#         if user_row['password'] == password
+#             puts "yeah budda"
+#             user_mainmenu
+#          else
+#             puts "Incorrect password."
+#             sleep 1
+#             user_login
+#         end
+#     else
+#     failed
+#     end
+# end
 
-def authentication(username)
-    # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
-    csv = CSV.read( "login.csv", headers: true )
-    csv.find {|row| row['name'] == username}
-end
+# def authentication(username)
+#     # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
+#     csv = CSV.read( "login.csv", headers: true )
+#     csv.find {|row| row['name'] == username}
+# end
 
-def failed
-    puts "Username not recognised. Please try again."
-    sleep(1)
-    user_login
-    # exit
-end
+# def failed
+#     puts "Username not recognised. Please try again."
+#     sleep(1)
+#     user_login
+#     # exit
+# end
 
 # Start of application
 # def start
@@ -161,6 +162,19 @@ end
 
 #     #puts @options
 # end
-
+# item,price,quantity,link
+prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
+# system("clear")
+inventory = CSV.read('inventory.csv', headers:true)
+CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
+# welcome = prompt.select("Welcome to the Skate shop app!") do |menu|
+#     inventory.each do |product|
+#     menu.choice(row['item'])
+#     end
+# end
+# puts welcome
+# puts inventory
+# puts csv
+# puts inventory
 # puts start
 # puts user_login

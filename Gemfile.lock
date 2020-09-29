@@ -1,10 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    asciiart (0.0.9)
+      rainbow (= 2.0.0)
+      rmagick (= 2.13.4)
     pastel (0.8.0)
       tty-color (~> 0.5)
+    rainbow (2.0.0)
+    rmagick (2.13.4)
     tty-color (0.5.2)
     tty-cursor (0.7.1)
+    tty-link (0.1.1)
     tty-prompt (0.22.0)
       pastel (~> 0.8)
       tty-reader (~> 0.8)
@@ -19,6 +25,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  asciiart (~> 0.0.9)
+  tty-link (~> 0.1.1)
   tty-prompt (~> 0.22.0)
 
 BUNDLED WITH
