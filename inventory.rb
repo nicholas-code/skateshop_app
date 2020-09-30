@@ -9,7 +9,7 @@ require 'asciiart'
 # g = AsciiArt.new("inv_pictures/hardware1.jpg")
 # h = AsciiArt.new("inv_pictures/wheel.jpg")
 # #   => #<AsciiArt:0x007fa889cbacf8 @data="...">
-# puts a.to_ascii_art(width:75, color:true)
+# puts a.to_ascii_art(width:50, color:true)
 # puts b.to_ascii_art(width:75, color:true)
 # puts c.to_ascii_art(width:75, color:true)
 # puts e.to_ascii_art(width:75, color:true)
@@ -51,7 +51,7 @@ def back_to_menu_user
         menu.choice "nah"
     end
         if b == "yeah"
-            staff_mainmenu
+            user_mainmenu
         else
             exit
         end
