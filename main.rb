@@ -1,6 +1,6 @@
 require 'csv'
 require 'tty-prompt'
-require 'tty-link'
+# require 'tty-link'
 require 'asciiart'
 require 'tty-font'
 require 'smarter_csv'
@@ -63,7 +63,8 @@ def user_mainmenu
         menu.choice 'Exit'
     end
     if user_menu == 'View pictures of Inventory'
-        view_images
+        # view_images
+        step1
         
     elsif user_menu == 'Show Inventory'
         user_inventory

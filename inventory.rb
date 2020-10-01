@@ -1,26 +1,6 @@
 require 'asciiart'
 
-# a = AsciiArt.new("inv_pictures/deck_e.jpg")
-# b = AsciiArt.new("inv_pictures/bearings_1.jpg")
-# c = AsciiArt.new("inv_pictures/bearings.jpg")
-
-# e = AsciiArt.new("inv_pictures/grip1.jpg")
-# f = AsciiArt.new("inv_pictures/hardware.jpg")
-# g = AsciiArt.new("inv_pictures/hardware1.jpg")
-# h = AsciiArt.new("inv_pictures/wheel.jpg")
-# #   => #<AsciiArt:0x007fa889cbacf8 @data="...">
-# puts a.to_ascii_art(width:50, color:true)
-# puts b.to_ascii_art(width:75, color:true)
-# puts c.to_ascii_art(width:75, color:true)
-# puts e.to_ascii_art(width:75, color:true)
-# puts f.to_ascii_art(width:75, color:true)
-# puts g.to_ascii_art(width:75, color:true)
-# puts h.to_ascii_art(width:75, color:true)
-#  puts b.to_ascii_art(width:75, color:true)
-
-
 # staff inventory options
-
 def inventory_pull
     # inventory = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
     # puts inventory 
@@ -61,15 +41,13 @@ def overwrite
     CSV.open("inventory.csv", "w") do |csv| 
         csv << [:item, :price, :quantity, :link]
     end
-    
-
 end
 
-def amending(item_option)
-    # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
-    csv = CSV.read( "login.csv", headers: true )
-    csv.find {|row| row['item'] == item_option}
-end
+# def amending(item_option)
+#     # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
+#     csv = CSV.read( "login.csv", headers: true )
+#     csv.find {|row| row['item'] == item_option}
+# end
 
 def amend
     inventory_pull
@@ -88,6 +66,7 @@ def amend
 
     if option == 'Item name'
         puts "What would you like to change item name to?"
+        print "🛹 "
         change = gets.chomp.capitalize
         p change
         data = SmarterCSV.process("inventory.csv")
@@ -113,6 +92,7 @@ def amend
 
     elsif option == 'Price'
         puts "What would you like to change item price to?"
+        print "🛹 $"
         change = gets.chomp
         data = SmarterCSV.process("inventory.csv")
         data.each_with_index do |row, index|
@@ -136,6 +116,7 @@ def amend
         
     elsif option == 'Quantity'
         puts "What would you like to change item quantity to?"
+        print "🛹 "
         change = gets.chomp
         data = SmarterCSV.process("inventory.csv")
         data.each_with_index do |row, index|
@@ -159,6 +140,7 @@ def amend
 
     elsif option == 'Picture'
         puts "What would you like to change item picture to?"
+        print "🛹 "
         change = gets.chomp
         data = SmarterCSV.process("inventory.csv")
         data.each_with_index do |row, index|
@@ -213,15 +195,14 @@ def delete
 
     else
         staff_mainmenu
-end
-
-    
+    end
+  
 end
 
 def create
     puts "What is the item name?"
     print "🛹 "
-    item = gets.chomp
+    item = gets.chomp.capitalize
     system("clear")
     puts "Enter price of item"
     print "🛹 $"
@@ -249,12 +230,43 @@ def user_inventory
     back_to_menu_user
 end
 
-def view_images
+# def view_images
+#     inventory_pull
+#     puts "What item would you like to view?"
+#     puts "Enter item name:"
+#     print "🛹 "
+#     option = gets.chomp.capitalize
+#     data = SmarterCSV.process("inventory.csv")
+#     data.each_with_index do |row, index|
+#         if option == row[:item]
+#         puts "this is #{row[:link]}"
+#         pic = AsciiArt.new(row[:link])
+#         puts pic
+            
+#         end
+#     end
+# end
+
+def pic(input)
+    user_row = picture(input)
+    system("clear")
+    a = AsciiArt.new("#{user_row['link']}")
+    puts a.to_ascii_art(width:75, color:true)
+end
+
+def step1
+    step2
+    pic(gets.chomp.capitalize)
+end
+
+def step2
     inventory_pull
     puts "What item would you like to view?"
     puts "Enter item name:"
     print "🛹 "
-    option = gets.chomp
-    xx = amending(option)
-    
 end
+def picture(item)
+    # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
+    csv = CSV.read( "inventory.csv", headers: true )
+    csv.find {|row| row['item'] == item}
+end        
