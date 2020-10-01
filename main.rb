@@ -14,6 +14,10 @@ end
 # artii = Artii::Base.new
 # puts artii.asciify('S K A T E S H O P')
 
+def goodbye
+    font = TTY::Font.new(:doom)
+    puts font.write("GOODBYE", letter_spacing: 1)
+end
 
 def prettys
     font = TTY::Font.new(:doom)
@@ -113,6 +117,7 @@ def staff_mainmenu
         new_staff_member
     else
         system("clear")
+        goodbye
         puts "Keep up the good work!!"
         exit
     end
@@ -120,6 +125,7 @@ end
 
 def leaving
     system("clear")
+    goodbye
     puts "Thanks for visiting the Skateshop"
     exit
 end

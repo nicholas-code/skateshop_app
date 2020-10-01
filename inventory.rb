@@ -229,12 +229,16 @@ def create
     print "🛹 "
     quantity = gets.chomp
     system("clear")
-    # puts "Add image of item"
-    #dont know how will do this bit
+    puts "Item added to system"
+    sleep(2)
+    puts "If you have an image for this item"
+    sleep(2)
+    puts "please copy it to the inv_pictures folder inside src"
+    sleep(2)
+    puts "then use the amend item option and add the file path please."
+    sleep(6)
     CSV.open("inventory.csv", "a") do |csv|
-        csv << [item, price, quantity, "picture"]
-        puts "Item added to system"
-        sleep (2)
+        csv << [item, price, quantity, "picture_needed"]
         system("clear")
     end
     staff_mainmenu
@@ -252,18 +256,25 @@ end
 def pic(input)
     item_row = picture(input)
     system("clear")
-    a = AsciiArt.new("#{item_row['link']}")
-    puts a.to_ascii_art(width:80, color:true)
-    view = prompt.select("Would you like to view another?") do |menu|
-    menu.choice 'Yes'
-    menu.choice 'No'
-    end
-        if view == 'Yes'
-            system("clear")
-            step2
+        if item_row['link'] == "picture_needed"
+            puts "sorry no picture available"
+            sleep (2) 
+            clear
+            step1
         else
-            staff_mainmenu
-        end   
+            a = AsciiArt.new("#{item_row['link']}")
+            puts a.to_ascii_art(width:80, color:true)
+            view = prompt.select("Would you like to view another?") do |menu|
+            menu.choice 'Yes'
+            menu.choice 'No'
+            end
+                if view == 'Yes'
+                    system("clear")
+                    step2
+                else
+                    staff_mainmenu
+                end
+        end
     end
     
 
@@ -277,18 +288,25 @@ end
 def userpic(input)
     item_row = picture(input)
     system("clear")
-    a = AsciiArt.new("#{item_row['link']}")
-    puts a.to_ascii_art(width:80, color:true)
-    view = prompt.select("Would you like to view another?") do |menu|
-    menu.choice 'Yes'
-    menu.choice 'No'
-    end
-        if view == 'Yes'
-            system("clear")
-            step1
-        else
-            user_mainmenu
-        end   
+    if item_row['link'] == "picture_needed"
+        puts "sorry no picture available"
+        sleep (2) 
+        clear
+        step1
+    else
+        a = AsciiArt.new("#{item_row['link']}")
+        puts a.to_ascii_art(width:80, color:true)
+        view = prompt.select("Would you like to view another?") do |menu|
+        menu.choice 'Yes'
+        menu.choice 'No'
+        end
+            if view == 'Yes'
+                system("clear")
+                step1
+            else
+                user_mainmenu
+            end 
+    end  
 end
 
 def picture(item)
