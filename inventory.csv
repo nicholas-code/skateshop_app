@@ -1,7 +1,8 @@
 item,price,quantity,link
-Deck,100,9,inv_pictures/deck_ee.jpg
+Deck,99,9,inv_pictures/deck_ee.jpg
 Wheels,35,12,inv_pictures/wheel.jpg
 Griptape,10,50,inv_pictures/grip1.jpg
 Hardware,15,50,inv_pictures/hardware1.jpg
 Bearings,25,25,inv_pictures/bearings.jpg
 Wax,15,12,inv_pictures/wax.jpg
+Bar,12,12,picture

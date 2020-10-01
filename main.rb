@@ -40,7 +40,8 @@ def start
     prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
     system("clear")
     skateshop
-    welcome = prompt.select("Welcome to the Skate shop app!") do |menu|
+    puts "Welcome to the Skate shop app!"
+    welcome = prompt.select("Please log in.") do |menu|
         menu.choice 'Staff'
         menu.choice 'New User'
         menu.choice 'Existing User'

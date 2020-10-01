@@ -1,6 +1,12 @@
 require 'asciiart'
 
 # staff inventory options
+def inventory_pull_with_link
+    # inventory = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
+    # puts inventory 
+    CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}, Link=#{row["link"]}" }
+end
+
 def inventory_pull
     # inventory = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
     # puts inventory 
@@ -48,24 +54,33 @@ end
 #     csv = CSV.read( "login.csv", headers: true )
 #     csv.find {|row| row['item'] == item_option}
 # end
+def find(input)
+    item_row = picture(input)
+end
 
 def amend
-    inventory_pull
+    inventory_pull_with_link
     prompt
     puts "What item would you like to amend"
     puts "Enter item name:"
     print "🛹 "
     item = gets.chomp.capitalize
-    option = prompt.select("what would you like to amend with this item?") do |menu|
-        menu.choice 'Item name'
-        menu.choice 'Price'
-        menu.choice 'Quantity'
-        menu.choice 'Picture'
-        menu.choice 'Abort'
-    end
+    # system("clear")
+        # if item_row
+            option = prompt.select("what would you like to amend with this item?") do |menu|
+                menu.choice 'Item name'
+                menu.choice 'Price'
+                menu.choice 'Quantity'
+                menu.choice 'Picture'
+                menu.choice 'Abort'
+            end
+        # else
+        #     "Item not listed, try again."
+        #     amend
+        # end
 
     if option == 'Item name'
-        puts "What would you like to change item name to?"
+        puts "What would you like to change the item name to?"
         print "🛹 "
         change = gets.chomp.capitalize
         p change
@@ -87,6 +102,7 @@ def amend
                 csv << row.values
             end
         end
+        staff_mainmenu
 
 
     elsif option == 'Price'
@@ -111,6 +127,7 @@ def amend
                 csv << row.values
             end
         end
+        staff_mainmenu
         
     elsif option == 'Quantity'
         puts "What would you like to change item quantity to?"
@@ -134,9 +151,10 @@ def amend
                 csv << row.values
             end
         end
+        staff_mainmenu
 
     elsif option == 'Picture'
-        puts "What would you like to change item picture to?"
+        puts "What would you like to change the items picture file link to?"
         print "🛹 "
         change = gets.chomp
         data = SmarterCSV.process("inventory.csv")
@@ -157,8 +175,9 @@ def amend
                 csv << row.values
             end
         end
+        staff_mainmenu
     else
-        back_to_menu
+        back_to_menu_staff
     end
     
 end
@@ -166,7 +185,7 @@ end
 def delete
     inventory_pull
     prompt
-    puts "What item would you like to amend"
+    puts "What item would you like to delete from the system?"
     puts "Enter item name:"
     print "🛹 "
     item = gets.chomp.capitalize
@@ -176,10 +195,12 @@ def delete
     end
     if vanish == 'Yes' 
         data = SmarterCSV.process("inventory.csv")
-        data.each_with_index do |row, index|
+        data.each do |row|
             # p row[:item]
             if item == row[:item]
-                p item
+                row.each.delete
+                # p item
+                # sleep 4
             end        
         end
         overwrite
@@ -188,7 +209,9 @@ def delete
                 csv << row.values
             end
         end
+        staff_mainmenu
     else
+        puts "Item has not been deleted"
         staff_mainmenu
     end
 end
@@ -227,15 +250,16 @@ def step2
 end
 
 def pic(input)
-    user_row = picture(input)
+    item_row = picture(input)
     system("clear")
-    a = AsciiArt.new("#{user_row['link']}")
+    a = AsciiArt.new("#{item_row['link']}")
     puts a.to_ascii_art(width:80, color:true)
     view = prompt.select("Would you like to view another?") do |menu|
     menu.choice 'Yes'
     menu.choice 'No'
     end
         if view == 'Yes'
+            system("clear")
             step2
         else
             staff_mainmenu
@@ -251,15 +275,16 @@ end
 
 
 def userpic(input)
-    user_row = picture(input)
+    item_row = picture(input)
     system("clear")
-    a = AsciiArt.new("#{user_row['link']}")
+    a = AsciiArt.new("#{item_row['link']}")
     puts a.to_ascii_art(width:80, color:true)
     view = prompt.select("Would you like to view another?") do |menu|
     menu.choice 'Yes'
     menu.choice 'No'
     end
         if view == 'Yes'
+            system("clear")
             step1
         else
             user_mainmenu
