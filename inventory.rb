@@ -217,72 +217,7 @@ def create
     staff_mainmenu
 end
 
-
-#user inventory options
-def user_inventory
-    inventory_pull
-    back_to_menu_user
-end
-
-# def view_images
-#     inventory_pull
-#     puts "What item would you like to view?"
-#     puts "Enter item name:"
-#     print "🛹 "
-#     option = gets.chomp.capitalize
-#     data = SmarterCSV.process("inventory.csv")
-#     data.each_with_index do |row, index|
-#         if option == row[:item]
-#         puts "this is #{row[:link]}"
-#         pic = AsciiArt.new(row[:link])
-#         puts pic
-            
-#         end
-#     end
-# end
-
-def pic(input)
-    user_row = picture(input)
-    system("clear")
-    a = AsciiArt.new("#{user_row['link']}")
-    puts a.to_ascii_art(width:75, color:true)
-    view = prompt.select("Would you like to view another?") do |menu|
-    menu.choice 'Yes'
-    menu.choice 'No'
-    end
-        if view == 'Yes'
-            step2
-        else
-            staff_mainmenu
-        end
-    
-end
-
-def userpic(input)
-    user_row = picture(input)
-    system("clear")
-    a = AsciiArt.new("#{user_row['link']}")
-    puts a.to_ascii_art(width:75, color:true)
-    view = prompt.select("Would you like to view another?") do |menu|
-    menu.choice 'Yes'
-    menu.choice 'No'
-    end
-        if view == 'Yes'
-            step1
-        else
-            user_mainmenu
-        end
-    
-end
-
-def step1
-    inventory_pull
-    puts "What item would you like to view?"
-    puts "Enter item name:"
-    print "🛹 "
-    userpic(gets.chomp.capitalize)
-end
-
+#staff image view starting point
 def step2
     inventory_pull
     puts "What item would you like to view?"
@@ -291,7 +226,56 @@ def step2
     pic(gets.chomp.capitalize)
 end
 
+def pic(input)
+    user_row = picture(input)
+    system("clear")
+    a = AsciiArt.new("#{user_row['link']}")
+    puts a.to_ascii_art(width:80, color:true)
+    view = prompt.select("Would you like to view another?") do |menu|
+    menu.choice 'Yes'
+    menu.choice 'No'
+    end
+        if view == 'Yes'
+            step2
+        else
+            staff_mainmenu
+        end   
+    end
+    
+
+#user inventory options
+def user_inventory
+    inventory_pull
+    back_to_menu_user
+end
+
+
+def userpic(input)
+    user_row = picture(input)
+    system("clear")
+    a = AsciiArt.new("#{user_row['link']}")
+    puts a.to_ascii_art(width:80, color:true)
+    view = prompt.select("Would you like to view another?") do |menu|
+    menu.choice 'Yes'
+    menu.choice 'No'
+    end
+        if view == 'Yes'
+            step1
+        else
+            user_mainmenu
+        end   
+end
+
 def picture(item)
     csv = CSV.read( "inventory.csv", headers: true )
     csv.find {|row| row['item'] == item}
 end        
+
+# user image view starting point
+def step1
+    inventory_pull
+    puts "What item would you like to view?"
+    puts "Enter item name:"
+    print "🛹 "
+    userpic(gets.chomp.capitalize)
+end
