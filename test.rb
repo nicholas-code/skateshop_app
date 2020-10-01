@@ -189,3 +189,11 @@ product_list = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["
 #     return products
 # end
 # puts load_product_list
+
+
+# general ascii art
+# def render_ascii_art
+#   File.readlines("skate.txt") do |line|
+#     puts line
+#   end
+# end

@@ -2,7 +2,7 @@
 def new_user
     puts "What is your name?"
     print "🛹 "
-    username = gets.chomp
+    username = gets.chomp.capitalize
     system("clear")
     puts "Please enter a password"
     print "🛹 "
@@ -24,7 +24,7 @@ end
 def new_staff_member
     puts "What is the Staff name?"
     print "🛹 "
-    username = gets.chomp
+    username = gets.chomp.capitalize
     system("clear")
     puts "Please enter a password"
     print "🛹 "
@@ -45,12 +45,12 @@ end
 
 def user_login
     login_start
-    verified(gets.chomp)
+    verified(gets.chomp.capitalize)
 end
 
 def staff_login
     login_start
-    verified_staff(gets.chomp)
+    verified_staff(gets.chomp.capitalize)
 end
 
 def login_start
@@ -108,7 +108,6 @@ def verified_staff(input)
 end
 
 def authentication(username)
-    # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
     csv = CSV.read( "login.csv", headers: true )
     csv.find {|row| row['name'] == username}
 end
@@ -118,5 +117,4 @@ def failed
     sleep(1)
     system("clear")
     start
-    # exit
 end

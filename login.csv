@@ -1,8 +1,9 @@
 name,password,email,type
-Nick,Nick123,nick@gmail.com,staff
+Nick,nick123,nick@gmail.com,staff
 Bob,bob123,bob@gmail.com,user
-greg,greg123,greg@gmail.com,user
-freddy,freddy123,freddy@gmail.com,user
-dan,dan123,dan@gmail.com,user
-vic,vic123,vic@gmail.com,user
-tom,tom123,tom@gmail.com,user
+Greg,greg123,greg@gmail.com,user
+Freddy,freddy123,freddy@gmail.com,user
+Dan,dan123,dan@gmail.com,user
+Vic,vic123,vic@gmail.com,user
+Tom,tom123,tom@gmail.com,user
+Bobby,def,feds,staff

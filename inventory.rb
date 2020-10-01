@@ -78,7 +78,6 @@ def amend
                     price: row[:price],
                     quantity: row[:quantity],
                     link: row[:link],
-                
                 }
             end        
         end
@@ -103,7 +102,6 @@ def amend
                     price: change,
                     quantity: row[:quantity],
                     link: row[:link],
-                
                 }
             end        
         end
@@ -127,7 +125,6 @@ def amend
                     price: row[:price],
                     quantity: change,
                     link: row[:link],
-                
                 }
             end        
         end
@@ -151,7 +148,6 @@ def amend
                     price: row[:price],
                     quantity: row[:quantity],
                     link: change,
-                
                 }
             end        
         end
@@ -192,11 +188,9 @@ def delete
                 csv << row.values
             end
         end
-
     else
         staff_mainmenu
     end
-  
 end
 
 def create
@@ -252,11 +246,41 @@ def pic(input)
     system("clear")
     a = AsciiArt.new("#{user_row['link']}")
     puts a.to_ascii_art(width:75, color:true)
+    view = prompt.select("Would you like to view another?") do |menu|
+    menu.choice 'Yes'
+    menu.choice 'No'
+    end
+        if view == 'Yes'
+            step2
+        else
+            staff_mainmenu
+        end
+    
+end
+
+def userpic(input)
+    user_row = picture(input)
+    system("clear")
+    a = AsciiArt.new("#{user_row['link']}")
+    puts a.to_ascii_art(width:75, color:true)
+    view = prompt.select("Would you like to view another?") do |menu|
+    menu.choice 'Yes'
+    menu.choice 'No'
+    end
+        if view == 'Yes'
+            step1
+        else
+            user_mainmenu
+        end
+    
 end
 
 def step1
-    step2
-    pic(gets.chomp.capitalize)
+    inventory_pull
+    puts "What item would you like to view?"
+    puts "Enter item name:"
+    print "🛹 "
+    userpic(gets.chomp.capitalize)
 end
 
 def step2
@@ -264,9 +288,10 @@ def step2
     puts "What item would you like to view?"
     puts "Enter item name:"
     print "🛹 "
+    pic(gets.chomp.capitalize)
 end
+
 def picture(item)
-    # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
     csv = CSV.read( "inventory.csv", headers: true )
     csv.find {|row| row['item'] == item}
 end        
