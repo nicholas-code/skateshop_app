@@ -1,7 +1,7 @@
 item,price,quantity,link
-Skateboard Deck,100,9,####
-Wheels (set of 4),35,12,####
+Deck,100,9,####
+Wheels,35,12,####
 Griptape,10,50,####
-Hardware(fullset),15,50,####
-Bearings,25,25,####"","","",picture
-wax,15,12,picture
+Hardware,15,50,####
+Bearings,25,25,####
+Waxxy,15,12,picture

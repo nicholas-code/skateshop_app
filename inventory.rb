@@ -57,6 +57,14 @@ def back_to_menu_user
         end
 end
 
+def overwrite
+    CSV.open("inventory.csv", "w") do |csv| 
+        csv << [:item, :price, :quantity, :link]
+    end
+    
+
+end
+
 def amending(item_option)
     # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
     csv = CSV.read( "login.csv", headers: true )
@@ -70,7 +78,6 @@ def amend
     puts "Enter item name:"
     print "🛹 "
     item = gets.chomp.capitalize
-    p item
     option = prompt.select("what would you like to amend with this item?") do |menu|
         menu.choice 'Item name'
         menu.choice 'Price'
@@ -80,19 +87,29 @@ def amend
     end
 
     if option == 'Item name'
-        # if item == row['item']
-
-        # else
-        # end
-        CSV.open("inventory.csv", "w") do |csv| 
-            csv << [:item, :price, :quantity, :link]
+        puts "What would you like to change item name to?"
+        change = gets.chomp.capitalize
+        p change
+        data = SmarterCSV.process("inventory.csv")
+        data.each_with_index do |row, index|
+            # p row[:item]
+            if item == row[:item]
+                data[index] = {
+                    item: change,
+                    price: row[:price],
+                    quantity: row[:quantity],
+                    link: row[:link],
+                
+                }
+            end        
         end
-        
+        overwrite
         data.each do |row|
             CSV.open("inventory.csv", "a") do |csv| 
                 csv << row.values
             end
         end
+
 
     elsif option == 'Price'
         
@@ -108,8 +125,36 @@ def amend
 end
 
 def delete
-    staff_inventory
-    puts " delete it will come here"
+    inventory_pull
+    prompt
+    puts "What item would you like to amend"
+    puts "Enter item name:"
+    print "🛹 "
+    item = gets.chomp.capitalize
+    vanish = prompt.select("Are you absolutely sure you want to delete #{item}?") do |menu|
+        menu.choice 'Yes'
+        menu.choice 'No'
+    end
+    if vanish == 'Yes' 
+        data = SmarterCSV.process("inventory.csv")
+        data.each_with_index do |row, index|
+            # p row[:item]
+            if item == row[:item]
+                p item
+            end        
+        end
+        overwrite
+        data.each do |row|
+            CSV.open("inventory.csv", "a") do |csv| 
+                csv << row.values
+            end
+        end
+
+    else
+        staff_mainmenu
+end
+
+    
 end
 
 def create

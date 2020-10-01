@@ -15,3 +15,5 @@ gem "asciiart", "~> 0.0.9"
 gem "artii", "~> 2.1"
 
 gem "tty-font", "~> 0.5.0"
+
+gem "smarter_csv", "~> 1.2"

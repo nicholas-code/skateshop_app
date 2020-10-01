@@ -3,6 +3,7 @@ require 'tty-prompt'
 require 'tty-link'
 require 'asciiart'
 require 'tty-font'
+require 'smarter_csv'
 # require 'artii'
 require_relative "./inventory"
 require_relative "./users_login"
@@ -94,7 +95,7 @@ def staff_mainmenu
     elsif staff_menu == 'Amend Existing Item'
         amend
         
-    elsif staff_menu == 'Delete Exisitng Item'
+    elsif staff_menu == 'Delete Existing Item'
         delete 
        
     elsif staff_menu == 'Add New Staff Member'    
