@@ -112,12 +112,73 @@ def amend
 
 
     elsif option == 'Price'
-        
+        puts "What would you like to change item price to?"
+        change = gets.chomp
+        data = SmarterCSV.process("inventory.csv")
+        data.each_with_index do |row, index|
+            # p row[:item]
+            if item == row[:item]
+                data[index] = {
+                    item: row[:item],
+                    price: change,
+                    quantity: row[:quantity],
+                    link: row[:link],
+                
+                }
+            end        
+        end
+        overwrite
+        data.each do |row|
+            CSV.open("inventory.csv", "a") do |csv| 
+                csv << row.values
+            end
+        end
         
     elsif option == 'Quantity'
+        puts "What would you like to change item quantity to?"
+        change = gets.chomp
+        data = SmarterCSV.process("inventory.csv")
+        data.each_with_index do |row, index|
+            # p row[:item]
+            if item == row[:item]
+                data[index] = {
+                    item: row[:item],
+                    price: row[:price],
+                    quantity: change,
+                    link: row[:link],
+                
+                }
+            end        
+        end
+        overwrite
+        data.each do |row|
+            CSV.open("inventory.csv", "a") do |csv| 
+                csv << row.values
+            end
+        end
 
     elsif option == 'Picture'
-        
+        puts "What would you like to change item picture to?"
+        change = gets.chomp
+        data = SmarterCSV.process("inventory.csv")
+        data.each_with_index do |row, index|
+            # p row[:item]
+            if item == row[:item]
+                data[index] = {
+                    item: row[:item],
+                    price: row[:price],
+                    quantity: row[:quantity],
+                    link: change,
+                
+                }
+            end        
+        end
+        overwrite
+        data.each do |row|
+            CSV.open("inventory.csv", "a") do |csv| 
+                csv << row.values
+            end
+        end
     else
         back_to_menu
     end
