@@ -263,29 +263,25 @@ def pic(input)
         if item_row['link']
             a = AsciiArt.new("#{item_row['link']}")
             puts a.to_ascii_art(width:80, color:true)
-            view = prompt.select("Would you like to view another?") do |menu|
-                menu.choice 'Yes'
-                menu.choice 'No'
-            end
-                    if view == 'Yes'
-                        system("clear")
-                        step2
-                    else
-                        staff_mainmenu
-                    end
             
         else
             puts "Sorry no picture available for that item"
             sleep (2)
-            staff_mainmenu
         end
     rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
         puts "Sorry no picture available for that item"
         sleep (2) 
-        staff_mainmenu
     end
-
-    
+    view = prompt.select("Would you like to view another?") do |menu|
+        menu.choice 'Yes'
+        menu.choice 'No'
+    end
+        if view == 'Yes'
+            system("clear")
+            step2
+        else
+            staff_mainmenu
+        end   
 end   
 
 #user inventory options
@@ -298,24 +294,28 @@ end
 def userpic(input)
     item_row = picture(input)
     system("clear")
-    if item_row['link'] == "picture_needed"
-        puts "sorry no picture available"
-        sleep (2) 
-        step1
-    else
-        a = AsciiArt.new("#{item_row['link']}")
-        puts a.to_ascii_art(width:80, color:true)
-        view = prompt.select("Would you like to view another?") do |menu|
+    begin
+        if item_row['link']
+            a = AsciiArt.new("#{item_row['link']}")
+            puts a.to_ascii_art(width:80, color:true)
+        else
+            puts "sorry no picture available"
+            sleep (2) 
+        end 
+    rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
+        puts "Sorry no picture available for that item"
+        sleep (2)    
+    end 
+    view = prompt.select("Would you like to view another?") do |menu|
         menu.choice 'Yes'
         menu.choice 'No'
-        end
-            if view == 'Yes'
-                system("clear")
-                step1
-            else
-                user_mainmenu
-            end 
-    end  
+    end
+        if view == 'Yes'
+            system("clear")
+            step1
+        else
+            user_mainmenu
+        end 
 end
 
 def picture(item)
