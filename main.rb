@@ -54,13 +54,10 @@ def start
     
     if welcome == 'New User'
         new_user
-
     elsif welcome == 'Existing User'
-        user_login
-        
+        user_login      
     elsif welcome == 'Staff'
-        staff_login
-        
+        staff_login       
     else
        leaving
     end
@@ -108,6 +105,7 @@ def staff_mainmenu
     elsif staff_menu == 'Create New Item'
         create
     elsif staff_menu == 'Amend Existing Item'
+        # z_item
         amend
     elsif staff_menu == 'Delete Existing Item'
         delete 

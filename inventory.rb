@@ -1,10 +1,6 @@
 require 'asciiart'
 
 # staff inventory options
-def inventory_pull_with_link
-    CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}, Link=#{row["link"]}" }
-end
-
 def inventory_pull
     CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}" }
 end
@@ -45,35 +41,32 @@ def overwrite
     end
 end
 
-# def amending(item_option)
-#     # CSV.open('login.csv', headers: true).find { |row| row['name'] == username }
-#     csv = CSV.read( "login.csv", headers: true )
-#     csv.find {|row| row['item'] == item_option}
-# end
-def find(input)
-    item_row = picture(input)
-end
-
 def amend
-    inventory_pull_with_link
-    prompt
+    CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}, Link= #{row["link"]}" }
     puts "What item would you like to amend"
     puts "Enter item name:"
     print "🛹 "
     item = gets.chomp.capitalize
-    # system("clear")
-        # if item_row
-            option = prompt.select("what would you like to amend with this item?") do |menu|
-                menu.choice 'Item name'
-                menu.choice 'Price'
-                menu.choice 'Quantity'
-                menu.choice 'Picture'
-                menu.choice 'Abort'
+    csv = CSV.read( "inventory.csv", headers: true )
+    item_row = csv.find {|row| row['item'] == item}
+    prompt
+    begin
+        if item_row['item']
+                option = prompt.select("what would you like to amend with this item?") do |menu|
+                    menu.choice 'Item name'
+                    menu.choice 'Price'
+                    menu.choice 'Quantity'
+                    menu.choice 'Picture'
+                    menu.choice 'Abort'
+                end
+            else
+                "Item not listed, try again."
             end
-        # else
-        #     "Item not listed, try again."
-        #     amend
-        # end
+    rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
+        puts "Item not listed or type error.... Please try again"
+        sleep (3)
+        staff_mainmenu
+    end
 
     if option == 'Item name'
         puts "What would you like to change the item name to?"
