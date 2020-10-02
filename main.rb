@@ -95,18 +95,18 @@ def staff_mainmenu
     system("clear")
     prettys
     staff_menu = prompt.select("Menu, Staff Access") do |menu|
-        menu.choice 'Create New Item'
         menu.choice 'Show Inventory'
+        menu.choice 'Create New Item'
         menu.choice 'Amend Existing Item'
         menu.choice 'Delete Existing Item'
         menu.choice 'View pictures of Inventory'
         menu.choice 'Add New Staff Member'
         menu.choice 'Exit'
     end
-    if staff_menu == 'Create New Item'
-        create
-    elsif staff_menu == 'Show Inventory'
+    if staff_menu == 'Show Inventory'
         staff_inventory
+    elsif staff_menu == 'Create New Item'
+        create
     elsif staff_menu == 'Amend Existing Item'
         amend
     elsif staff_menu == 'Delete Existing Item'

@@ -9,6 +9,7 @@ puts "Enter item name:"
 print "🛹 "
 item = gets.chomp.capitalize
 data = SmarterCSV.process("inventory.csv")
+
 data.delete_if { |row| item == row[:item] }
     CSV.open("inventory.csv", "w") do |csv| 
         csv << [:item, :price, :quantity, :link]

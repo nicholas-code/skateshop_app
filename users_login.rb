@@ -72,7 +72,7 @@ def verified(input)
             system("clear")
             user_mainmenu
          else
-            puts "Incorrect password."
+            puts "Incorrect password. Please try again"
             sleep 1
             system("clear")
             start
@@ -114,7 +114,7 @@ end
 
 def failed
     puts "Username not recognised. Please try again."
-    sleep(1)
+    sleep(2)
     system("clear")
     start
 end

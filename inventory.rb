@@ -82,7 +82,6 @@ def amend
         p change
         data = SmarterCSV.process("inventory.csv")
         data.each_with_index do |row, index|
-            # p row[:item]
             if item == row[:item]
                 data[index] = {
                     item: change,
@@ -105,48 +104,63 @@ def amend
         puts "What would you like to change item price to?"
         print "🛹 $"
         change = gets.chomp
-        data = SmarterCSV.process("inventory.csv")
-        data.each_with_index do |row, index|
-            # p row[:item]
-            if item == row[:item]
-                data[index] = {
-                    item: row[:item],
-                    price: change,
-                    quantity: row[:quantity],
-                    link: row[:link],
-                }
-            end        
-        end
-        overwrite
-        data.each do |row|
-            CSV.open("inventory.csv", "a") do |csv| 
-                csv << row.values
-            end
-        end
-        staff_mainmenu
+            begin
+                change = Integer(change)
+                data = SmarterCSV.process("inventory.csv")
+                data.each_with_index do |row, index|
+                    if item == row[:item]
+                        data[index] = {
+                            item: row[:item],
+                            price: change,
+                            quantity: row[:quantity],
+                            link: row[:link],
+                        }
+                    end        
+                end
+                overwrite
+                data.each do |row|
+                    CSV.open("inventory.csv", "a") do |csv| 
+                        csv << row.values
+                    end
+                end
+            rescue ArgumentError, TypeError
+                puts "Invalid input."
+                puts "Please try again."    
+                sleep (3)
+                    staff_mainmenu
+                end
+            staff_mainmenu
         
     elsif option == 'Quantity'
         puts "What would you like to change item quantity to?"
         print "🛹 "
         change = gets.chomp
-        data = SmarterCSV.process("inventory.csv")
-        data.each_with_index do |row, index|
-            # p row[:item]
-            if item == row[:item]
-                data[index] = {
-                    item: row[:item],
-                    price: row[:price],
-                    quantity: change,
-                    link: row[:link],
-                }
-            end        
-        end
-        overwrite
-        data.each do |row|
-            CSV.open("inventory.csv", "a") do |csv| 
-                csv << row.values
+            begin
+                change = Integer(change)
+                data = SmarterCSV.process("inventory.csv")
+                data.each_with_index do |row, index|
+                    # p row[:item]
+                    if item == row[:item]
+                        data[index] = {
+                            item: row[:item],
+                            price: row[:price],
+                            quantity: change,
+                            link: row[:link],
+                        }
+                    end        
+                end
+                overwrite
+                data.each do |row|
+                    CSV.open("inventory.csv", "a") do |csv| 
+                        csv << row.values
+                    end
+                end
+            rescue ArgumentError, TypeError
+                puts "Invalid input."
+                puts "Please try again."    
+                sleep (3)
+                staff_mainmenu
             end
-        end
         staff_mainmenu
 
     elsif option == 'Picture'
