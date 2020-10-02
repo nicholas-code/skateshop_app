@@ -2,6 +2,25 @@ require 'csv'
 require 'tty-prompt'
 require_relative "./inventory"
 
+inventory_pull
+prompt
+puts "What item would you like to delete from the system?"
+puts "Enter item name:"
+print "🛹 "
+item = gets.chomp.capitalize
+data = SmarterCSV.process("inventory.csv")
+data.delete_if { |row| item == row[:item] }
+    CSV.open("inventory.csv", "w") do |csv| 
+        csv << [:item, :price, :quantity, :link]
+    end
+    data.each do |row|
+        CSV.open("inventory.csv", "a") do |csv| 
+            csv << row.values
+        end
+    end
+
+
+
 # class Users
 #     # Giving read access to username and password
 #     attr_reader :username, :password

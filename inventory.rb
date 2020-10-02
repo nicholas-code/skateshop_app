@@ -2,14 +2,10 @@ require 'asciiart'
 
 # staff inventory options
 def inventory_pull_with_link
-    # inventory = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
-    # puts inventory 
     CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}, Link=#{row["link"]}" }
 end
 
 def inventory_pull
-    # inventory = CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"].capitalize}, Qty= #{row["quantity"]}" }
-    # puts inventory 
     CSV.foreach("inventory.csv", headers: true) { |row| puts "#{row["item"]} - $#{row["price"]}, Qty= #{row["quantity"]}" }
 end
 
@@ -21,10 +17,10 @@ end
 
 def back_to_menu_staff
     b = prompt.select("Back to menu?") do |menu|
-        menu.choice "yeah"
-        menu.choice "nah"
+        menu.choice "Yes"
+        menu.choice "No"
     end
-        if b == "yeah"
+        if b == "Yes"
             staff_mainmenu
         else
             exit
@@ -33,10 +29,10 @@ end
 
 def back_to_menu_user
     b = prompt.select("Back to menu?") do |menu|
-        menu.choice "yeah"
-        menu.choice "nah"
+        menu.choice "Yes"
+        menu.choice "No"
     end
-        if b == "yeah"
+        if b == "Yes"
             user_mainmenu
         else
             exit
@@ -195,14 +191,7 @@ def delete
     end
     if vanish == 'Yes' 
         data = SmarterCSV.process("inventory.csv")
-        data.each do |row|
-            # p row[:item]
-            if item == row[:item]
-                row.each.delete
-                # p item
-                # sleep 4
-            end        
-        end
+        data.delete_if { |row| item == row[:item] }
         overwrite
         data.each do |row|
             CSV.open("inventory.csv", "a") do |csv| 
