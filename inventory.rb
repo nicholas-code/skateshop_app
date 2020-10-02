@@ -259,27 +259,34 @@ end
 def pic(input)
     item_row = picture(input)
     system("clear")
-        if item_row['link'] == "picture_needed"
-            puts "sorry no picture available"
-            sleep (2) 
-            clear
-            step1
-        else
+    begin
+        if item_row['link']
             a = AsciiArt.new("#{item_row['link']}")
             puts a.to_ascii_art(width:80, color:true)
             view = prompt.select("Would you like to view another?") do |menu|
-            menu.choice 'Yes'
-            menu.choice 'No'
+                menu.choice 'Yes'
+                menu.choice 'No'
             end
-                if view == 'Yes'
-                    system("clear")
-                    step2
-                else
-                    staff_mainmenu
-                end
+                    if view == 'Yes'
+                        system("clear")
+                        step2
+                    else
+                        staff_mainmenu
+                    end
+            
+        else
+            puts "Sorry no picture available for that item"
+            sleep (2)
+            staff_mainmenu
         end
+    rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
+        puts "Sorry no picture available for that item"
+        sleep (2) 
+        staff_mainmenu
     end
+
     
+end   
 
 #user inventory options
 def user_inventory
@@ -294,7 +301,6 @@ def userpic(input)
     if item_row['link'] == "picture_needed"
         puts "sorry no picture available"
         sleep (2) 
-        clear
         step1
     else
         a = AsciiArt.new("#{item_row['link']}")
