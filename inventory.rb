@@ -61,6 +61,7 @@ def amend
                 end
             else
                 "Item not listed, try again."
+                staff_mainmenu
             end
     rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
         puts "Item not listed or type error.... Please try again"
@@ -192,10 +193,24 @@ def delete
     puts "Enter item name:"
     print "🛹 "
     item = gets.chomp.capitalize
-    vanish = prompt.select("Are you absolutely sure you want to delete #{item}?") do |menu|
-        menu.choice 'Yes'
-        menu.choice 'No'
+    csv = CSV.read( "inventory.csv", headers: true )
+    item_row = csv.find {|row| row['item'] == item}
+    begin
+        if item_row['item']
+            vanish = prompt.select("Are you absolutely sure you want to delete #{item}?") do |menu|
+                menu.choice 'Yes'
+                menu.choice 'No'
+            end
+        else
+            "Item not listed, try again."
+            staff_mainmenu
+        end
+    rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
+        puts "Item not listed or type error.... Please try again"
+        sleep (3)
+        staff_mainmenu
     end
+
     if vanish == 'Yes' 
         data = SmarterCSV.process("inventory.csv")
         data.delete_if { |row| item == row[:item] }
