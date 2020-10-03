@@ -59,7 +59,11 @@ def login_start
 end
 
 def verified(input)
+    begin
     user_row = authentication(input)
+    rescue NoMethodError
+        puts 'errorm8'
+    end
     system("clear")
     if user_row
         puts 'Please enter your password:'
@@ -83,27 +87,31 @@ def verified(input)
 end
 
 def verified_staff(input)
-    user_row = authentication(input)
-    system("clear")
-    if user_row['type'] == "staff"        
-        puts 'Please enter your password:'
-        print "🛹 "
-        password = gets.chomp
-        if user_row['password'] == password
-            system("clear")
-            puts "Do some work m8"
-            sleep(2)
-            system("clear")
-            staff_mainmenu
+    begin
+        user_row = authentication(input)
+        system("clear")
+        if user_row['type'] == "staff"        
+            puts 'Please enter your password:'
+            print "🛹 "
+            password = gets.chomp
+            if user_row['password'] == password
+                system("clear")
+                puts "Do some work m8"
+                sleep(2)
+                system("clear")
+                staff_mainmenu
+            else
+                puts "Incorrect password."
+                sleep 1
+                system("clear")
+                # user_login
+                start
+            end
         else
-            puts "Incorrect password."
-            sleep 1
-            system("clear")
-            # user_login
-            start
+            failed
         end
-    else
-    failed
+    rescue NoMethodError
+        failed
     end
 end
 

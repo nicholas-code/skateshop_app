@@ -14,21 +14,6 @@ end
 # artii = Artii::Base.new
 # puts artii.asciify('S K A T E S H O P')
 
-def goodbye
-    font = TTY::Font.new(:doom)
-    puts font.write("GOODBYE", letter_spacing: 1)
-end
-
-def prettys
-    font = TTY::Font.new(:doom)
-    puts font.write("STAFF MENU", letter_spacing: 1)
-end
-
-def pretty
-    font = TTY::Font.new(:doom)
-    puts font.write("MENU", letter_spacing: 1)
-end
-
 def skateshop
     puts"░██████╗██╗░░██╗░█████╗░████████╗███████╗░██████╗██╗░░██╗░█████╗░██████╗░"
     puts"██╔════╝██║░██╔╝██╔══██╗╚══██╔══╝██╔════╝██╔════╝██║░░██║██╔══██╗██╔══██╗"
@@ -40,8 +25,8 @@ end
 
 # Start of application
 def start
-
-    prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
+    
+    prompt
     system("clear")
     skateshop
     puts "Welcome to the Skate shop app!"
@@ -59,7 +44,7 @@ def start
     elsif welcome == 'Staff'
         staff_login       
     else
-       leaving
+        leaving
     end
     
 end
@@ -67,7 +52,7 @@ end
 # main menus for app after login successful
 # user menu
 def user_mainmenu
-    prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
+    prompt
     system("clear")
     pretty
     user_menu = prompt.select("Welcome to the menu") do |menu|
@@ -77,7 +62,6 @@ def user_mainmenu
         menu.choice 'Exit'
     end
     if user_menu == 'View pictures of Inventory'
-        # view_images
         step1  
     elsif user_menu == 'Show Inventory'
         user_inventory
@@ -88,7 +72,7 @@ end
 
 # staff menu
 def staff_mainmenu
-    prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
+    prompt
     system("clear")
     prettys
     staff_menu = prompt.select("Menu, Staff Access") do |menu|
@@ -105,7 +89,6 @@ def staff_mainmenu
     elsif staff_menu == 'Create New Item'
         create
     elsif staff_menu == 'Amend Existing Item'
-        # z_item
         amend
     elsif staff_menu == 'Delete Existing Item'
         delete 
@@ -126,6 +109,22 @@ def leaving
     goodbye
     puts "Thanks for visiting the Skateshop"
     exit
+end
+
+# styling
+def goodbye
+    font = TTY::Font.new(:doom)
+    puts font.write("GOODBYE", letter_spacing: 1)
+end
+
+def prettys
+    font = TTY::Font.new(:doom)
+    puts font.write("STAFF MENU", letter_spacing: 1)
+end
+
+def pretty
+    font = TTY::Font.new(:doom)
+    puts font.write("MENU", letter_spacing: 1)
 end
 
 puts start
