@@ -4,4 +4,4 @@ sudo apt-get install imagemagick-dev
 gem install rmagick
 gem install rainbow
 bundle install
-ruby main.rb
+ruby main.rb -h

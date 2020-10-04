@@ -1,18 +1,17 @@
 require 'csv'
+require 'optparse'
 require 'tty-prompt'
 require 'asciiart'
 require 'tty-font'
 require 'smarter_csv'
-# require 'tty-link'
-# require 'artii'
+require 'tty-link'
+require 'artii'
 require_relative "./inventory"
 require_relative "./users_login"
 
 def prompt
     prompt = TTY::Prompt.new(symbols: {marker: '🛹'})
 end
-# artii = Artii::Base.new
-# puts artii.asciify('S K A T E S H O P')
 
 def skateshop
     puts"░██████╗██╗░░██╗░█████╗░████████╗███████╗░██████╗██╗░░██╗░█████╗░██████╗░"
@@ -38,16 +37,15 @@ def start
         menu.choice 'Existing User'
         menu.choice 'Exit'
     end
-    
-    if welcome == 'New User'
-        new_user
-    elsif welcome == 'Existing User'
-        user_login      
-    elsif welcome == 'Staff'
-        staff_login       
-    else
-        leaving
-    end
+        if welcome == 'New User'
+            new_user
+        elsif welcome == 'Existing User'
+            user_login      
+        elsif welcome == 'Staff'
+            staff_login       
+        else
+            leaving
+        end
     
 end
 
@@ -60,16 +58,15 @@ def user_mainmenu
     user_menu = prompt.select("Welcome to the menu") do |menu|
         menu.choice 'Show Inventory'
         menu.choice 'View pictures of Inventory'
-        # menu.choice 'Add item to cart'
         menu.choice 'Exit'
     end
-    if user_menu == 'View pictures of Inventory'
-        step1  
-    elsif user_menu == 'Show Inventory'
-        user_inventory
-    else
-        leaving
-    end
+        if user_menu == 'View pictures of Inventory'
+            step1  
+        elsif user_menu == 'Show Inventory'
+            user_inventory
+        else
+            leaving
+        end
 end
 
 # staff menu
@@ -86,24 +83,24 @@ def staff_mainmenu
         menu.choice 'Add New Staff Member'
         menu.choice 'Exit'
     end
-    if staff_menu == 'Show Inventory'
-        staff_inventory
-    elsif staff_menu == 'Create New Item'
-        create
-    elsif staff_menu == 'Amend Existing Item'
-        amend
-    elsif staff_menu == 'Delete Existing Item'
-        delete 
-    elsif staff_menu == 'View pictures of Inventory'
-        step2
-    elsif staff_menu == 'Add New Staff Member'    
-        new_staff_member
-    else
-        system("clear")
-        pretty("GOODBYE")
-        puts "Keep up the good work!!"
-        exit
-    end
+        if staff_menu == 'Show Inventory'
+            staff_inventory
+        elsif staff_menu == 'Create New Item'
+            create
+        elsif staff_menu == 'Amend Existing Item'
+            amend
+        elsif staff_menu == 'Delete Existing Item'
+            delete 
+        elsif staff_menu == 'View pictures of Inventory'
+            step2
+        elsif staff_menu == 'Add New Staff Member'    
+            new_staff_member
+        else
+            system("clear")
+            pretty("GOODBYE")
+            puts "Keep up the good work!!"
+            exit
+        end
 end
 
 def leaving
@@ -119,4 +116,22 @@ def pretty(word)
     puts font.write(word, letter_spacing: 1)
 end
 
+@options = {}
+
+op = OptionParser.new do |opts|
+    opts.on("-v", "--verbose", "show extra information") do 
+        @options[:verbose] = true
+    end
+    opts.on("-c", "--color", "Enable syntax highlighting") do
+        @options[:syntax_highlighting] = true
+    end
+    opts.on("-h", "--help", "Help") do
+        @options[:help] = "Log into app and use direction keys to navigate menu. At times the app will ask for keyboard input. Exit anytime from a main menu."
+    end
+end
+
+op.parse!
+
+puts @options
+sleep (7)
 puts start

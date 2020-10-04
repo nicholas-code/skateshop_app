@@ -60,10 +60,10 @@ def amend
                     menu.choice 'Picture'
                     menu.choice 'Abort'
                 end
-            else
-                "Item not listed, try again."
-                staff_mainmenu
-            end
+        else
+            "Item not listed, try again."
+            staff_mainmenu
+        end
     rescue ArgumentError, TypeError, NoMethodError, Errno::ENOENT
         puts "Item not listed or type error.... Please try again"
         sleep (3)
@@ -85,14 +85,14 @@ def amend
                     link: row[:link],
                 }
             end        
+    end
+    overwrite
+    data.each do |row|
+        CSV.open("inventory.csv", "a") do |csv| 
+            csv << row.values
         end
-        overwrite
-        data.each do |row|
-            CSV.open("inventory.csv", "a") do |csv| 
-                csv << row.values
-            end
-        end
-        staff_mainmenu
+    end
+    staff_mainmenu
 
 
     elsif option == 'Price'
