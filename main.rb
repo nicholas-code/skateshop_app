@@ -133,5 +133,14 @@ end
 op.parse!
 
 puts @options
-sleep (7)
-puts start
+c = prompt.select("Continue?") do |menu|
+    menu.choice "Yes"
+    menu.choice "No"
+end
+    if c == "Yes"
+        start
+    else
+        exit
+    end
+
+# puts start

@@ -134,7 +134,6 @@ def amend
                 change = Integer(change)
                 data = SmarterCSV.process("inventory.csv")
                 data.each_with_index do |row, index|
-                    # p row[:item]
                     if item == row[:item]
                         data[index] = {
                             item: row[:item],
@@ -164,7 +163,6 @@ def amend
         change = gets.chomp
         data = SmarterCSV.process("inventory.csv")
         data.each_with_index do |row, index|
-            # p row[:item]
             if item == row[:item]
                 data[index] = {
                     item: row[:item],
@@ -212,20 +210,20 @@ def delete
         staff_mainmenu
     end
 
-    if vanish == 'Yes' 
-        data = SmarterCSV.process("inventory.csv")
-        data.delete_if { |row| item == row[:item] }
-        overwrite
-        data.each do |row|
-            CSV.open("inventory.csv", "a") do |csv| 
-                csv << row.values
+        if vanish == 'Yes' 
+            data = SmarterCSV.process("inventory.csv")
+            data.delete_if { |row| item == row[:item] }
+            overwrite
+            data.each do |row|
+                CSV.open("inventory.csv", "a") do |csv| 
+                    csv << row.values
+                end
             end
+            staff_mainmenu
+        else
+            puts "Item has not been deleted"
+            staff_mainmenu
         end
-        staff_mainmenu
-    else
-        puts "Item has not been deleted"
-        staff_mainmenu
-    end
 end
 
 def create
@@ -307,7 +305,6 @@ def user_inventory
     inventory_pull
     back_to_menu_user
 end
-
 
 def userpic(input)
     item_row = picture(input)
