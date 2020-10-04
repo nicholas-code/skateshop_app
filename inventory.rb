@@ -31,7 +31,8 @@ def back_to_menu_user
         if b == "Yes"
             user_mainmenu
         else
-            exit
+            system("clear")
+            leaving
         end
 end
 
@@ -228,6 +229,7 @@ def delete
 end
 
 def create
+    begin
     puts "What is the item name?"
     print "🛹 "
     item = gets.chomp.capitalize
@@ -235,10 +237,18 @@ def create
     puts "Enter price of item"
     print "🛹 $"
     price = gets.chomp
+    price = Integer(price)
     system("clear")
     puts "Enter quantity of item"
     print "🛹 "
     quantity = gets.chomp
+    quantity = Integer(quantity)
+    rescue ArgumentError, TypeError
+    puts "Invalid input."
+    puts "Please try again."    
+    sleep (3)
+    create
+    end
     system("clear")
     puts "Item added to system"
     sleep(2)

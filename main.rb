@@ -25,7 +25,9 @@ end
 
 # Start of application
 def start
-    
+    pretty("WELCOME")
+    sleep (2)
+    system("clear")
     prompt
     system("clear")
     skateshop
@@ -54,7 +56,7 @@ end
 def user_mainmenu
     prompt
     system("clear")
-    pretty
+    pretty("MENU")
     user_menu = prompt.select("Welcome to the menu") do |menu|
         menu.choice 'Show Inventory'
         menu.choice 'View pictures of Inventory'
@@ -74,7 +76,7 @@ end
 def staff_mainmenu
     prompt
     system("clear")
-    prettys
+    pretty("MENU")
     staff_menu = prompt.select("Menu, Staff Access") do |menu|
         menu.choice 'Show Inventory'
         menu.choice 'Create New Item'
@@ -98,7 +100,7 @@ def staff_mainmenu
         new_staff_member
     else
         system("clear")
-        goodbye
+        pretty("GOODBYE")
         puts "Keep up the good work!!"
         exit
     end
@@ -106,25 +108,15 @@ end
 
 def leaving
     system("clear")
-    goodbye
+    pretty("GOODBYE")
     puts "Thanks for visiting the Skateshop"
     exit
 end
 
 # styling
-def goodbye
+def pretty(word)
     font = TTY::Font.new(:doom)
-    puts font.write("GOODBYE", letter_spacing: 1)
-end
-
-def prettys
-    font = TTY::Font.new(:doom)
-    puts font.write("STAFF MENU", letter_spacing: 1)
-end
-
-def pretty
-    font = TTY::Font.new(:doom)
-    puts font.write("MENU", letter_spacing: 1)
+    puts font.write(word, letter_spacing: 1)
 end
 
 puts start
